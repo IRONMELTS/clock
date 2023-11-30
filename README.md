@@ -1,2 +1,2 @@
-# stopwatch
+# clock
 I am bored
