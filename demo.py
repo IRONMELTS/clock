@@ -37,9 +37,10 @@ def reset():
             root.after_cancel(loop)
       except:
             pass
-      global timer_number,start_button,show_time,c
+      global timer_number,start_button,show_time,c,just_started
       timer_number=0
       c=0
+      just_started=True
 
       start_button.pack_forget()
       show_time.pack_forget()
