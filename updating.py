@@ -1,24 +1,65 @@
 import tkinter as tk
 
 timer_number=0
+c=-1
+just_started=True
 
 def start():
-    global timer_number
-    timer_number+=1
-    global timer
-    timer.pack_forget()
-    timer=tk.Label(root,background="#1c1c1c",foreground="white",text=timer_number,font=("Arial",60))
-    timer.place(x=0,y=80,width=800,height=75)
-    root.after(1000,start)
+      global c,just_started,start_button,show_time,loop
+      c+=1
+
+      if just_started==True:
+            start_button.pack_forget()
+            start_button=tk.Button(root,text="Stop",font=("Arial",30),background="#2ecc71",activebackground="#2ecc71",foreground="white",activeforeground="white",border=0,command=lambda: stop())
+            start_button.place(x=190,y=300,height=50,width=100)
+            just_started=False
+      
+      show_time.pack_forget()
+      show_time=tk.Label(root,text=c,font=("Arial",60),background="#1c1c1c",foreground="white")
+      show_time.place(x=0,y=100,width=800,height=80)
+      loop=root.after(1000,start)
+
+def stop():
+      global start_button,just_started
+      root.after_cancel(loop)
+
+      start_button.pack_forget()
+      start_button=tk.Button(root,text="Start",font=("Arial",30),background="#2ecc71",activebackground="#2ecc71",foreground="white",activeforeground="white",border=0,command=lambda: start())
+      start_button.place(x=190,y=300,height=50,width=100)
+      just_started=True
+
+def reset():
+      try:
+            root.after_cancel(loop)
+      except:
+            pass
+      global timer_number,start_button,show_time,c
+      timer_number=0
+      c=-1
+
+      start_button.pack_forget()
+      show_time.pack_forget()
+
+      show_time=tk.Label(root,text=timer_number,font=("Arial",60),background="#1c1c1c",foreground="white")
+      show_time.place(x=0,y=100,width=800,height=80)
+
+      start_button=tk.Button(root,text="Start",font=("Arial",30),background="#2ecc71",activebackground="#2ecc71",foreground="white",activeforeground="white",border=0,command=lambda: start())
+      start_button.place(x=190,y=300,height=50,width=100)
+
 
 root=tk.Tk()
-root.title("TEST")
 root.geometry("800x600")
+root.resizable(False,False)
+root.title("TEST")
 root.configure(background="#1c1c1c")
 
-timer=tk.Label(root,background="#1c1c1c",foreground="white",text=timer_number,font=("Arial",60))
-timer.place(x=0,y=80,width=800,height=75)
+show_time=tk.Label(root,text=timer_number,font=("Arial",60),background="#1c1c1c",foreground="white")
+show_time.place(x=0,y=100,width=800,height=80)
 
-start()
+start_button=tk.Button(root,text="Start",font=("Arial",30),background="#2ecc71",activebackground="#2ecc71",foreground="white",activeforeground="white",border=0,command=lambda: start())
+start_button.place(x=190,y=300,height=50,width=100)
+
+reset_button=tk.Button(root,text="Reset",font=("Arial",30),background="#2ecc71",activebackground="#2ecc71",foreground="white",activeforeground="white",border=0,command=lambda: reset())
+reset_button.place(x=510,y=300,height=50,width=120)
 
 root.mainloop()
